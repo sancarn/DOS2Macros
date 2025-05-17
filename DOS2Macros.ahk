@@ -3,24 +3,39 @@
 CoordMode Pixel, Screen
 CoordMode Mouse, Screen
 
-#IfWinActive ahk_class SDL_app
-$^B::DOS2InventoryTimer("SendToBeast")
-$^I::DOS2InventoryTimer("SendToIfan")
-$^S::DOS2InventoryTimer("SendToSebille","*70")
-$^F::DOS2InventoryTimer("SendToFane")
-$^V::DOS2InventoryTimer("SendToLadyVengence","*70")
+ContextRowHeight:=30
 
-DOS2InventoryTimer(ImageName, Variation:="*50") {
-    imagePath := A_ScriptDir . "\Resources\" . ImageName . ".png"
+#IfWinActive ahk_class SDL_app
+
+;Send to a specific character
+$^R::DOS2InventoryTimer("SendToRedPrince")
+$^S::DOS2InventoryTimer("SendToSebille")
+$^I::DOS2InventoryTimer("SendToIfan")
+$^B::DOS2InventoryTimer("SendToBeast")
+$^L::DOS2InventoryTimer("SendToLohse")
+$^F::DOS2InventoryTimer("SendToFane")
+
+;Send to the lady vengence
+$^V::DOS2InventoryTimer("SendToLadyVengence")
+
+;Send to the 1st( or 2nd, 3rd, 4th) option listed in the context menu
+$^1::DOS2InventoryTimer("SendToAmbiguous",, 0*ContextRowHeight)
+$^2::DOS2InventoryTimer("SendToAmbiguous",, 1*ContextRowHeight)
+$^3::DOS2InventoryTimer("SendToAmbiguous",, 2*ContextRowHeight)
+$^4::DOS2InventoryTimer("SendToAmbiguous",, 3*ContextRowHeight)
+
+
+
+DOS2InventoryTimer(ImageName, Variation:="*70", FixedOffset:=0) {
     key := SubStr(A_ThisHotkey, 3)
     While GetKeyState(key, "P")  ; e.g. "B" from "^B"
     {
-        DOS2InventoryMacro(ImageName,, Variation)
+        DOS2InventoryMacro(ImageName,, Variation, FixedOffset)
         Sleep,50
     }
 }
 
-DOS2InventoryMacro(ImagePath, SearchRadius:=300, Variation:="*50") {
+DOS2InventoryMacro(ImagePath, SearchRadius:=300, Variation:="*50", FixedOffset:=0) {
     ImagePath := A_ScriptDir . "\Resources\" . ImagePath . ".png"
     
     Click, Right
@@ -41,7 +56,8 @@ DOS2InventoryMacro(ImagePath, SearchRadius:=300, Variation:="*50") {
         if (A_TickCount - start > 300)
             return false
     }
-
+    fy := fy + FixedOffset
+    
     ; re-grab mouse pos just before click
     MouseGetPos, cx, cy
     Sleep,10 ;buffer to ensure right cx and cy obtained
