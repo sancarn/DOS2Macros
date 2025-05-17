@@ -40,6 +40,10 @@ Divinity: Original Sin 2 is notorious for its inventory management — especiall
 
 That's it! The script will repeatedly right-click → locate the menu option → click to send.
 
+Sample gif below (or view on [youtube](https://youtube.com/shorts/pHtWGjAbJJs?feature=share))
+
+![_](./Docs/SampleGif.gif)
+
 ## Known Limitations
 
 * Rarely the macro will shift the position of the mouse to click the item, without shifting it back to it's original position. Still not totally certain why... 
