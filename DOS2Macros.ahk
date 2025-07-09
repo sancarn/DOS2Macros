@@ -14,6 +14,8 @@ $^I::DOS2InventoryTimer("SendToIfan")
 $^B::DOS2InventoryTimer("SendToBeast")
 $^L::DOS2InventoryTimer("SendToLohse")
 $^F::DOS2InventoryTimer("SendToFane")
+$^D::DOS2InventoryTimer("Drop")
+
 
 ;Send to the lady vengence
 $^V::DOS2InventoryTimer("SendToLadyVengence")
